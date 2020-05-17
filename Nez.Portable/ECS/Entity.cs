@@ -470,6 +470,20 @@ namespace Nez
 			return Components.GetComponent<T>(onlyReturnInitializedComponents);
 		}
 
+
+		/// <summary>
+		/// Gets the first component of type T and returns true if it has it.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="component"></param>
+		/// <returns></returns>
+		public bool HasComponent<T>(out T component) where T : Component
+		{
+			component = GetComponent<T>(false);
+			return component != null;
+		}
+
+
 		/// <summary>
 		/// Gets all the components of type T without a List allocation
 		/// </summary>

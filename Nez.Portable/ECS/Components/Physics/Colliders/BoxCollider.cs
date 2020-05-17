@@ -7,7 +7,7 @@ namespace Nez
 	public class BoxCollider : Collider
 	{
 		[Inspectable]
-		[Range(1, float.MaxValue, true)]
+		[Range(1, 1024, true)]
 		public float Width
 		{
 			get => ((Box) Shape).Width;
@@ -15,7 +15,7 @@ namespace Nez
 		}
 
 		[Inspectable]
-		[Range(1, float.MaxValue, true)]
+		[Range(1, 1024, true)]
 		public float Height
 		{
 			get => ((Box) Shape).Height;

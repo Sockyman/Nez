@@ -43,8 +43,14 @@ namespace Nez
                 if (collider.IsTrigger)
                     continue;
 
-                // fetch anything that we might collide with at our new position
-                var bounds = collider.Bounds;
+
+				// check for any collisions along the line to the destination
+				bool colliding = collider.CollidesWithAny(out var res);
+				CheckRaycast(collider, ref motion, ref collisionResult);
+
+
+				// fetch anything that we might collide with at our new position
+				var bounds = collider.Bounds;
                 bounds.X += motion.X;
                 bounds.Y += motion.Y;
                 var neighbors =
@@ -66,22 +72,53 @@ namespace Nez
                             collisionResult = _InternalcollisionResult;
                     }
                 }
-            }
+
+
+				// auxilery check just in case
+				if (!colliding && CheckRaycast(collider, ref motion, ref collisionResult))
+				{
+					motion = new Vector2();
+				}
+			}
 
             ListPool<Collider>.Free(colliders);
 
             return collisionResult.Collider != null;
         }
 
-        /// <summary>
-        /// Calculates the movement modifying the motion vector to take into account any collisions that will
-        /// occur when moving. This version is modified to output through a given collection to show every
-        /// collision that occured.
-        /// </summary>
-        /// <returns>The amount of collisions that occured.</returns>
-        /// <param name="motion">Motion.</param>
-        /// <param name="collisionResult">Collision result.</param>
-        public int AdvancedCalculateMovement(ref Vector2 motion, ICollection<CollisionResult> collisionResults)
+		/// <summary>
+		/// Checks for any collisions a colliser will have following a motion vector and modifies the vector to account for them.
+		/// </summary>
+		/// <param name="collider"></param>
+		/// <param name="motion"></param>
+		/// <param name="collisionResult"></param>
+		/// <returns>Whether or not there was a collision</returns>
+		private bool CheckRaycast(Collider collider, ref Vector2 motion, ref CollisionResult collisionResult)
+		{
+			var cPosition = collider.AbsolutePosition;
+			var cDestination = collider.AbsolutePosition + motion;
+			var rayHit = Physics.Linecast(cPosition, cDestination);
+			if (rayHit.Collider != null)
+			{
+				collisionResult.MinimumTranslationVector = motion - (rayHit.Point - cPosition);
+				motion = (rayHit.Point - cPosition);
+				collisionResult.Collider = rayHit.Collider;
+				collisionResult.Normal = rayHit.Normal;
+				collisionResult.Point = rayHit.Point;
+				return true;
+			}
+			return false;
+		}
+
+		/// <summary>
+		/// Calculates the movement modifying the motion vector to take into account any collisions that will
+		/// occur when moving. This version is modified to output through a given collection to show every
+		/// collision that occured.
+		/// </summary>
+		/// <returns>The amount of collisions that occured.</returns>
+		/// <param name="motion">Motion.</param>
+		/// <param name="collisionResult">Collision result.</param>
+		public int AdvancedCalculateMovement(ref Vector2 motion, ICollection<CollisionResult> collisionResults)
         {
             int Collisions = 0;
             // no collider? just move and forget about it

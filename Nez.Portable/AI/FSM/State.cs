@@ -42,7 +42,9 @@
 		/// called every frame this state is the active state
 		/// </summary>
 		/// <param name="deltaTime">Delta time.</param>
-		public abstract void Update(float deltaTime);
+		public virtual void Update(float deltaTime)
+		{
+		}
 
 
 		/// <summary>

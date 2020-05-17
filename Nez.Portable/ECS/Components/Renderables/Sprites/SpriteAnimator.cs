@@ -215,6 +215,16 @@ namespace Nez.Sprites
 			AnimationState = State.None;
 		}
 
+		/// <summary>
+		/// Checks whether or not an animation exists.
+		/// </summary>
+		/// <param name="animation"></param>
+		/// <returns></returns>
+		public bool AnimationExists(string animation)
+		{
+			return _animations.ContainsKey(animation);
+		}
+
 		#endregion
 	}
 }
