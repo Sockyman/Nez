@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using System.Windows;
 
 
 namespace Nez
@@ -18,11 +19,17 @@ namespace Nez
 		private static extern string SDL_GetClipboardText();
 
 
+
 		public static string GetContents()
 		{
+			Debug.Warn("Clipboard implementation has been removed due to fatal errors.");
+			// Currently broken
+			/*
 			if (_instance == null)
 				_instance = new Clipboard();
 			return _instance.GetContents();
+			*/
+			return "";
 		}
 
 

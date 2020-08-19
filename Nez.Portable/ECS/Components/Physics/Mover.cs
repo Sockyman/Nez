@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 
 namespace Nez
@@ -45,7 +46,7 @@ namespace Nez
 
 
 				// check for any collisions along the line to the destination
-				bool colliding = collider.CollidesWithAny(out var res);
+				bool colliding = collider.CollidesWithAny(out var _);
 				CheckRaycast(collider, ref motion, ref collisionResult);
 
 
@@ -96,6 +97,8 @@ namespace Nez
 		private bool CheckRaycast(Collider collider, ref Vector2 motion, ref CollisionResult collisionResult)
 		{
 			var cPosition = collider.AbsolutePosition;
+			if (cPosition == new Vector2(float.NaN, float.NaN))
+				return false;
 			var cDestination = collider.AbsolutePosition + motion;
 			var rayHit = Physics.Linecast(cPosition, cDestination);
 			if (rayHit.Collider != null)

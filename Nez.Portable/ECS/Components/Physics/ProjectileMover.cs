@@ -59,12 +59,18 @@ namespace Nez
 
 			_tempTriggerList.Clear();
 
+			if (other.Entity is ITriggerListener tl)
+				tl.OnTriggerEnter(self, other);
+
 			// notify any listeners on this Entity
 			Entity.GetComponents(_tempTriggerList);
 			for (var i = 0; i < _tempTriggerList.Count; i++)
 				_tempTriggerList[i].OnTriggerEnter(other, self);
 
 			_tempTriggerList.Clear();
+
+			if (Entity is ITriggerListener tl2)
+				tl2.OnTriggerEnter(other, self);
 		}
 	}
 }

@@ -804,6 +804,7 @@ namespace Nez.UI
 
 		void Paste(string content, bool fireChangeEvent)
 		{
+
 			if (content == null)
 				return;
 

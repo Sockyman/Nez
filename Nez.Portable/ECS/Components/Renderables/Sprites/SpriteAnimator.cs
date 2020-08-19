@@ -81,7 +81,7 @@ namespace Nez.Sprites
 		/// </summary>
 		public bool IsRunning => AnimationState == State.Running;
 
-		readonly Dictionary<string, SpriteAnimation> _animations = new Dictionary<string, SpriteAnimation>();
+		protected readonly Dictionary<string, SpriteAnimation> animations = new Dictionary<string, SpriteAnimation>();
 
 		float _elapsedTime;
 		LoopMode _loopMode;
@@ -92,7 +92,7 @@ namespace Nez.Sprites
 
 		public SpriteAnimator(Sprite sprite) => SetSprite(sprite);
 
-		void IUpdatable.Update()
+		public virtual void Update()
 		{
 			if (AnimationState != State.Running || CurrentAnimation == null)
 				return;
@@ -148,7 +148,7 @@ namespace Nez.Sprites
 		public SpriteAnimator AddAnimationsFromAtlas(SpriteAtlas atlas)
 		{
 			for (var i = 0; i < atlas.AnimationNames.Length; i++)
-				_animations.Add(atlas.AnimationNames[i], atlas.SpriteAnimations[i]);
+				animations.Add(atlas.AnimationNames[i], atlas.SpriteAnimations[i]);
 			return this;
 		}
 
@@ -160,7 +160,7 @@ namespace Nez.Sprites
 			// if we have no sprite use the first frame we find
 			if (Sprite == null && animation.Sprites.Length > 0)
 				SetSprite(animation.Sprites[0]);
-			_animations[name] = animation;
+			animations[name] = animation;
 			return this;
 		}
 
@@ -179,7 +179,7 @@ namespace Nez.Sprites
 		/// </summary>
 		public void Play(string name, LoopMode? loopMode = null)
 		{
-			CurrentAnimation = _animations[name];
+			CurrentAnimation = animations[name];
 			CurrentAnimationName = name;
 			CurrentFrame = 0;
 			AnimationState = State.Running;
@@ -215,6 +215,7 @@ namespace Nez.Sprites
 			AnimationState = State.None;
 		}
 
+
 		/// <summary>
 		/// Checks whether or not an animation exists.
 		/// </summary>
@@ -222,7 +223,7 @@ namespace Nez.Sprites
 		/// <returns></returns>
 		public bool AnimationExists(string animation)
 		{
-			return _animations.ContainsKey(animation);
+			return animations.ContainsKey(animation);
 		}
 
 		#endregion

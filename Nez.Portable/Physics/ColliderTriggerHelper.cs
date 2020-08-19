@@ -100,6 +100,13 @@ namespace Nez
 				else
 					_tempTriggerList[i].OnTriggerExit(collisionPair.Second, collisionPair.First);
 			}
+			if (collisionPair.First.Entity is ITriggerListener tl)
+			{
+				if (isEntering)
+					tl.OnTriggerEnter(collisionPair.Second, collisionPair.First);
+				else
+					tl.OnTriggerExit(collisionPair.Second, collisionPair.First);
+			}
 
 			_tempTriggerList.Clear();
 
@@ -113,6 +120,13 @@ namespace Nez
 						_tempTriggerList[i].OnTriggerEnter(collisionPair.First, collisionPair.Second);
 					else
 						_tempTriggerList[i].OnTriggerExit(collisionPair.First, collisionPair.Second);
+				}
+				if (collisionPair.Second.Entity is ITriggerListener tl2)
+				{
+					if (isEntering)
+						tl2.OnTriggerEnter(collisionPair.First, collisionPair.Second);
+					else
+						tl2.OnTriggerExit(collisionPair.First, collisionPair.Second);
 				}
 
 				_tempTriggerList.Clear();
