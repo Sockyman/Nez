@@ -662,8 +662,12 @@ namespace Nez.Tiled
 				// Append directory if present
 				image.Source = Path.Combine(tmxDir, (string)xSource);
 
-				using (var stream = TitleContainer.OpenStream(image.Source))
-					image.Texture = Texture2D.FromStream(Core.GraphicsDevice, stream);
+				/*using (var stream = TitleContainer.OpenStream(image.Source))
+					image.Texture = Texture2D.FromStream(Core.GraphicsDevice, stream);*/
+
+				image.Source = image.Source.Substring(Core.Content.RootDirectory.Length + 1);
+				image.Source = image.Source.Remove(image.Source.LastIndexOf('.'));
+				image.Texture = (Core.Scene?.Content ?? Core.Content).LoadTexture(image.Source);
 			}
 			else
 			{
