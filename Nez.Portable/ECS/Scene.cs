@@ -105,7 +105,7 @@ namespace Nez
 		/// Scene-specific ContentManager. Use it to load up any resources that are needed only by this scene. If you have global/multi-scene
 		/// resources you can use Core.contentManager to load them since Nez will not ever unload them.
 		/// </summary>
-		public readonly NezContentManager Content;
+		public NezContentManager Content { get; protected set; }
 
 		/// <summary>
 		/// global toggle for PostProcessors
