@@ -1,4 +1,4 @@
-![Nez](FAQs/images/nez-logo-black.png)
+![Nez](Nez.github.io/static/img/logo.svg)
 
 [![Build status](https://ci.appveyor.com/api/projects/status/github/prime31/Nez?branch=master&svg=true)](https://ci.appveyor.com/project/prime31/nez/branch/master)
 [![NuGet version](https://img.shields.io/nuget/v/Nez.svg)](https://www.nuget.org/packages/Nez)
@@ -8,7 +8,7 @@
 
 Nez aims to be a feature-rich 2D framework that sits on top of MonoGame/FNA. It provides a solid base for you to build a 2D game on. Some of the many features it includes are:
 
-- Scene/Entity/Component system with Component render layer tracking and optional entity systems (an implementation that operates on a group of entities that share a specific set of components)
+- Scene/Entity/Component system with Component render layer tracking
 - SpatialHash for super fast broadphase physics lookups. You won't ever see it since it works behind the scenes but you'll love it nonetheless since it makes finding everything in your proximity crazy fast via raycasts or overlap checks.
 - AABB, circle and polygon collision/trigger detection
 - Farseer Physics (based on Box2D) integration for when you need a full physics simulation
@@ -122,7 +122,7 @@ Bits and pieces of Nez were cherry-picked from various places around the interne
 
 I want to extend a special thanks to three people and their repos listed below. The Monocle Engine and MonoGame.Extended allowed me to get up and running with MonoGame nearly instantly when I was first evaluating if it would be a good alternative to use for making games. [libGDX](https://github.com/libgdx/libgdx) scene2D UI was ported over to Nez to get a jump start on a UI as well. Nez uses a bunch of concepts and code from all three of these repos.
 
-Matt Thorson's fantastic [Monocle Engine](https://bitbucket.org/MattThorson/monocle-engine)
+Maddy Thorson's fantastic Monocle Engine
 
 Dylan Wilson's excellent [MonoGame.Extended](https://github.com/craftworkgames/MonoGame.Extended) and his initial work on converted [Farseer Physics Engine](https://farseerphysics.codeplex.com/) to a Portable Class Library. Farseer is [Microsoft Permissive v1.1](https://farseerphysics.codeplex.com/license) licensed.
 

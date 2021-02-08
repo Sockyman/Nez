@@ -74,14 +74,19 @@ namespace Nez.Sprites
 		/// <summary>
 		/// index of the current frame in sprite array of the current animation
 		/// </summary>
-		public int CurrentFrame { get; private set; }
+		public int CurrentFrame { get; set; }
 
 		/// <summary>
 		/// checks to see if the CurrentAnimation is running
 		/// </summary>
 		public bool IsRunning => AnimationState == State.Running;
 
-		protected readonly Dictionary<string, SpriteAnimation> animations = new Dictionary<string, SpriteAnimation>();
+		/// <summary>
+		/// Provides access to list of available animations
+		/// </summary>
+		public Dictionary<string, SpriteAnimation> Animations { get { return _animations; } }
+
+		readonly Dictionary<string, SpriteAnimation> _animations = new Dictionary<string, SpriteAnimation>();
 
 		float _elapsedTime;
 		LoopMode _loopMode;
@@ -148,7 +153,7 @@ namespace Nez.Sprites
 		public SpriteAnimator AddAnimationsFromAtlas(SpriteAtlas atlas)
 		{
 			for (var i = 0; i < atlas.AnimationNames.Length; i++)
-				animations.Add(atlas.AnimationNames[i], atlas.SpriteAnimations[i]);
+				_animations.Add(atlas.AnimationNames[i], atlas.SpriteAnimations[i]);
 			return this;
 		}
 
@@ -160,7 +165,7 @@ namespace Nez.Sprites
 			// if we have no sprite use the first frame we find
 			if (Sprite == null && animation.Sprites.Length > 0)
 				SetSprite(animation.Sprites[0]);
-			animations[name] = animation;
+			_animations[name] = animation;
 			return this;
 		}
 
@@ -179,7 +184,7 @@ namespace Nez.Sprites
 		/// </summary>
 		public void Play(string name, LoopMode? loopMode = null)
 		{
-			CurrentAnimation = animations[name];
+			CurrentAnimation = _animations[name];
 			CurrentAnimationName = name;
 			CurrentFrame = 0;
 			AnimationState = State.Running;
@@ -213,17 +218,6 @@ namespace Nez.Sprites
 			CurrentAnimationName = null;
 			CurrentFrame = 0;
 			AnimationState = State.None;
-		}
-
-
-		/// <summary>
-		/// Checks whether or not an animation exists.
-		/// </summary>
-		/// <param name="animation"></param>
-		/// <returns></returns>
-		public bool AnimationExists(string animation)
-		{
-			return animations.ContainsKey(animation);
 		}
 
 		#endregion
